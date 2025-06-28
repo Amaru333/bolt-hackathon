@@ -87,7 +87,7 @@ function App() {
                 Showing {filteredCatastrophes.length} of {catastrophes.length} events
                 {isLoading && (
                   <span className="ml-2 inline-flex items-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-1" />
+                    <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-1" />
                     Updating...
                   </span>
                 )}

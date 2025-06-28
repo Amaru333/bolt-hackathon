@@ -1,6 +1,6 @@
-import React from 'react';
-import { RefreshCw, AlertCircle, CheckCircle, Clock, Wifi, WifiOff } from 'lucide-react';
-import { DataFetchStatus } from '../../types/api';
+import React from "react";
+import { RefreshCw, AlertCircle, CheckCircle, Clock, Wifi, WifiOff } from "lucide-react";
+import { DataFetchStatus } from "../../types/api";
 
 interface DataStatusProps {
   status: DataFetchStatus;
@@ -10,17 +10,11 @@ interface DataStatusProps {
   lastUpdated: Record<string, number>;
 }
 
-const DataStatus: React.FC<DataStatusProps> = ({
-  status,
-  isLoading,
-  onRefresh,
-  onClearErrors,
-  lastUpdated
-}) => {
+const DataStatus: React.FC<DataStatusProps> = ({ status, isLoading, onRefresh, onClearErrors, lastUpdated }) => {
   const formatLastUpdated = (timestamp: number) => {
-    if (!timestamp) return 'Never';
+    if (!timestamp) return "Never";
     const minutes = Math.floor((Date.now() - timestamp) / 60000);
-    if (minutes < 1) return 'Just now';
+    if (minutes < 1) return "Just now";
     if (minutes < 60) return `${minutes}m ago`;
     const hours = Math.floor(minutes / 60);
     if (hours < 24) return `${hours}h ago`;
@@ -29,11 +23,11 @@ const DataStatus: React.FC<DataStatusProps> = ({
 
   const getStatusIcon = (state: string) => {
     switch (state) {
-      case 'loading':
+      case "loading":
         return <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />;
-      case 'success':
+      case "success":
         return <CheckCircle className="w-4 h-4 text-green-400" />;
-      case 'error':
+      case "error":
         return <AlertCircle className="w-4 h-4 text-red-400" />;
       default:
         return <Clock className="w-4 h-4 text-gray-400" />;
@@ -41,38 +35,34 @@ const DataStatus: React.FC<DataStatusProps> = ({
   };
 
   const hasErrors = status.errors.length > 0;
-  const allSuccess = status.earthquakes === 'success' && status.fires === 'success' && status.weather === 'success';
+  const allSuccess =
+    status.earthquakes === "success" &&
+    status.fires === "success" &&
+    status.weather === "success" &&
+    status.volcanoes === "success" &&
+    status.tsunamis === "success" &&
+    status.airQuality === "success" &&
+    status.news === "success";
 
   return (
     <div className="bg-slate-700 rounded-lg p-4 space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium text-white flex items-center">
-          {allSuccess && !hasErrors ? (
-            <Wifi className="w-4 h-4 mr-2 text-green-400" />
-          ) : (
-            <WifiOff className="w-4 h-4 mr-2 text-red-400" />
-          )}
+          {allSuccess && !hasErrors ? <Wifi className="w-4 h-4 mr-2 text-green-400" /> : <WifiOff className="w-4 h-4 mr-2 text-red-400" />}
           Data Sources
         </h3>
-        <button
-          onClick={onRefresh}
-          disabled={isLoading}
-          className="p-1 rounded hover:bg-slate-600 transition-colors disabled:opacity-50"
-          title="Refresh all data"
-        >
-          <RefreshCw className={`w-4 h-4 text-slate-400 ${isLoading ? 'animate-spin' : ''}`} />
+        <button onClick={onRefresh} disabled={isLoading} className="p-1 rounded hover:bg-slate-600 transition-colors disabled:opacity-50" title="Refresh all data">
+          <RefreshCw className={`w-4 h-4 text-slate-400 ${isLoading ? "animate-spin" : ""}`} />
         </button>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 max-h-32 overflow-y-auto">
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center">
             {getStatusIcon(status.earthquakes)}
             <span className="ml-2 text-slate-300">USGS Earthquakes</span>
           </div>
-          <span className="text-slate-400">
-            {formatLastUpdated(lastUpdated.earthquakes)}
-          </span>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.earthquakes)}</span>
         </div>
 
         <div className="flex items-center justify-between text-xs">
@@ -80,9 +70,7 @@ const DataStatus: React.FC<DataStatusProps> = ({
             {getStatusIcon(status.fires)}
             <span className="ml-2 text-slate-300">NASA Fire Data</span>
           </div>
-          <span className="text-slate-400">
-            {formatLastUpdated(lastUpdated.fires)}
-          </span>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.fires)}</span>
         </div>
 
         <div className="flex items-center justify-between text-xs">
@@ -90,9 +78,39 @@ const DataStatus: React.FC<DataStatusProps> = ({
             {getStatusIcon(status.weather)}
             <span className="ml-2 text-slate-300">Weather Alerts</span>
           </div>
-          <span className="text-slate-400">
-            {formatLastUpdated(lastUpdated.weather)}
-          </span>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.weather)}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center">
+            {getStatusIcon(status.volcanoes)}
+            <span className="ml-2 text-slate-300">Volcanic Activity</span>
+          </div>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.volcanoes)}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center">
+            {getStatusIcon(status.tsunamis)}
+            <span className="ml-2 text-slate-300">Tsunami Warnings</span>
+          </div>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.tsunamis)}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center">
+            {getStatusIcon(status.airQuality)}
+            <span className="ml-2 text-slate-300">Air Quality</span>
+          </div>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.airQuality)}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center">
+            {getStatusIcon(status.news)}
+            <span className="ml-2 text-slate-300">Disaster News</span>
+          </div>
+          <span className="text-slate-400">{formatLastUpdated(lastUpdated.news)}</span>
         </div>
       </div>
 
@@ -100,10 +118,7 @@ const DataStatus: React.FC<DataStatusProps> = ({
         <div className="border-t border-slate-600 pt-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-red-400">Errors</span>
-            <button
-              onClick={onClearErrors}
-              className="text-xs text-slate-400 hover:text-white transition-colors"
-            >
+            <button onClick={onClearErrors} className="text-xs text-slate-400 hover:text-white transition-colors">
               Clear
             </button>
           </div>
@@ -118,9 +133,7 @@ const DataStatus: React.FC<DataStatusProps> = ({
         </div>
       )}
 
-      <div className="text-xs text-slate-400 border-t border-slate-600 pt-2">
-        Auto-refresh every 5 minutes
-      </div>
+      <div className="text-xs text-slate-400 border-t border-slate-600 pt-2">Auto-refresh every 5 minutes</div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ filters, onFiltersChange, totalCatastrophes, activeCatastrophes, recentCatastrophes, status, isLoading, onRefresh, onClearErrors, lastUpdated }) => {
-  const catastropheTypes: CatastropheType[] = ["earthquake", "fire", "flood", "hurricane", "tornado", "volcano", "accident", "drought", "landslide"];
+  const catastropheTypes: CatastropheType[] = ["earthquake", "fire", "flood", "hurricane", "tornado", "volcano", "accident", "drought", "landslide", "tsunami", "air_quality"];
 
   const severityLevels = ["low", "medium", "high", "critical"] as const;
 

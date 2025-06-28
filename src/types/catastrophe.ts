@@ -9,18 +9,19 @@ export interface Catastrophe {
     country: string;
     region: string;
   };
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: "low" | "medium" | "high" | "critical";
   date: string;
   affectedPeople?: number;
   economicImpact?: number;
-  status: 'active' | 'contained' | 'resolved';
+  status: "active" | "contained" | "resolved";
+  metadata?: Record<string, unknown>;
 }
 
-export type CatastropheType = 'earthquake' | 'fire' | 'flood' | 'hurricane' | 'tornado' | 'volcano' | 'accident' | 'drought' | 'landslide';
+export type CatastropheType = "earthquake" | "fire" | "flood" | "hurricane" | "tornado" | "volcano" | "accident" | "drought" | "landslide" | "tsunami" | "air_quality";
 
 export interface FilterState {
   types: CatastropheType[];
-  severities: ('low' | 'medium' | 'high' | 'critical')[];
+  severities: ("low" | "medium" | "high" | "critical")[];
   dateRange: {
     start: string;
     end: string;

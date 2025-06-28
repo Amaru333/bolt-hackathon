@@ -117,6 +117,10 @@ export interface DataFetchStatus {
   earthquakes: "loading" | "success" | "error" | "idle";
   fires: "loading" | "success" | "error" | "idle";
   weather: "loading" | "success" | "error" | "idle";
+  volcanoes: "loading" | "success" | "error" | "idle";
+  tsunamis: "loading" | "success" | "error" | "idle";
+  airQuality: "loading" | "success" | "error" | "idle";
+  news: "loading" | "success" | "error" | "idle";
   lastUpdated: Record<string, number>;
   errors: APIErrorData[];
 }

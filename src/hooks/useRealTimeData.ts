@@ -1,57 +1,78 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Catastrophe } from '../types/catastrophe';
-import { DataFetchStatus, APIError } from '../types/api';
-import { apiService } from '../services/apiService';
+import { useState, useEffect, useCallback } from "react";
+import { Catastrophe } from "../types/catastrophe";
+import { DataFetchStatus, APIError } from "../types/api";
+import { apiService } from "../services/apiService";
 
-export const useRealTimeData = (refreshInterval: number = 300000) => { // 5 minutes default
+export const useRealTimeData = (refreshInterval: number = 300000) => {
+  // 5 minutes default
   const [catastrophes, setCatastrophes] = useState<Catastrophe[]>([]);
   const [status, setStatus] = useState<DataFetchStatus>({
-    earthquakes: 'idle',
-    fires: 'idle',
-    weather: 'idle',
+    earthquakes: "idle",
+    fires: "idle",
+    weather: "idle",
+    volcanoes: "idle",
+    tsunamis: "idle",
+    airQuality: "idle",
+    news: "idle",
     lastUpdated: {},
-    errors: []
+    errors: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    setStatus(prev => ({
+    setStatus((prev) => ({
       ...prev,
-      earthquakes: 'loading',
-      fires: 'loading',
-      weather: 'loading',
-      errors: []
+      earthquakes: "loading",
+      fires: "loading",
+      weather: "loading",
+      volcanoes: "loading",
+      tsunamis: "loading",
+      airQuality: "loading",
+      news: "loading",
+      errors: [],
     }));
 
     try {
       const data = await apiService.fetchGlobalDisasters();
       setCatastrophes(data);
-      
-      setStatus(prev => ({
+
+      setStatus((prev) => ({
         ...prev,
-        earthquakes: 'success',
-        fires: 'success',
-        weather: 'success',
+        earthquakes: "success",
+        fires: "success",
+        weather: "success",
+        volcanoes: "success",
+        tsunamis: "success",
+        airQuality: "success",
+        news: "success",
         lastUpdated: {
           earthquakes: Date.now(),
           fires: Date.now(),
-          weather: Date.now()
-        }
+          weather: Date.now(),
+          volcanoes: Date.now(),
+          tsunamis: Date.now(),
+          airQuality: Date.now(),
+          news: Date.now(),
+        },
       }));
     } catch (error) {
       const apiError: APIError = {
-        source: 'Global',
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: Date.now()
+        source: "Global",
+        error: error instanceof Error ? error.message : "Unknown error",
+        timestamp: Date.now(),
       };
 
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
-        earthquakes: 'error',
-        fires: 'error',
-        weather: 'error',
-        errors: [apiError]
+        earthquakes: "error",
+        fires: "error",
+        weather: "error",
+        volcanoes: "error",
+        tsunamis: "error",
+        airQuality: "error",
+        news: "error",
+        errors: [apiError],
       }));
     } finally {
       setIsLoading(false);
@@ -59,63 +80,63 @@ export const useRealTimeData = (refreshInterval: number = 300000) => { // 5 minu
   }, []);
 
   const fetchEarthquakesOnly = useCallback(async () => {
-    setStatus(prev => ({ ...prev, earthquakes: 'loading' }));
-    
+    setStatus((prev) => ({ ...prev, earthquakes: "loading" }));
+
     try {
       const earthquakes = await apiService.fetchEarthquakes();
-      setCatastrophes(prev => [
-        ...prev.filter(c => c.type !== 'earthquake'),
-        ...earthquakes
-      ]);
-      
-      setStatus(prev => ({
+      setCatastrophes((prev) => [...prev.filter((c) => c.type !== "earthquake"), ...earthquakes]);
+
+      setStatus((prev) => ({
         ...prev,
-        earthquakes: 'success',
-        lastUpdated: { ...prev.lastUpdated, earthquakes: Date.now() }
+        earthquakes: "success",
+        lastUpdated: { ...prev.lastUpdated, earthquakes: Date.now() },
       }));
     } catch (error) {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
-        earthquakes: 'error',
-        errors: [...prev.errors, {
-          source: 'USGS',
-          error: error instanceof Error ? error.message : 'Unknown error',
-          timestamp: Date.now()
-        }]
+        earthquakes: "error",
+        errors: [
+          ...prev.errors,
+          {
+            source: "USGS",
+            error: error instanceof Error ? error.message : "Unknown error",
+            timestamp: Date.now(),
+          },
+        ],
       }));
     }
   }, []);
 
   const fetchWeatherOnly = useCallback(async () => {
-    setStatus(prev => ({ ...prev, weather: 'loading' }));
-    
+    setStatus((prev) => ({ ...prev, weather: "loading" }));
+
     try {
       const weather = await apiService.fetchWeatherAlerts();
-      setCatastrophes(prev => [
-        ...prev.filter(c => !['hurricane', 'tornado', 'flood'].includes(c.type)),
-        ...weather
-      ]);
-      
-      setStatus(prev => ({
+      setCatastrophes((prev) => [...prev.filter((c) => !["hurricane", "tornado", "flood"].includes(c.type)), ...weather]);
+
+      setStatus((prev) => ({
         ...prev,
-        weather: 'success',
-        lastUpdated: { ...prev.lastUpdated, weather: Date.now() }
+        weather: "success",
+        lastUpdated: { ...prev.lastUpdated, weather: Date.now() },
       }));
     } catch (error) {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
-        weather: 'error',
-        errors: [...prev.errors, {
-          source: 'Weather.gov',
-          error: error instanceof Error ? error.message : 'Unknown error',
-          timestamp: Date.now()
-        }]
+        weather: "error",
+        errors: [
+          ...prev.errors,
+          {
+            source: "Weather.gov",
+            error: error instanceof Error ? error.message : "Unknown error",
+            timestamp: Date.now(),
+          },
+        ],
       }));
     }
   }, []);
 
   const clearErrors = useCallback(() => {
-    setStatus(prev => ({ ...prev, errors: [] }));
+    setStatus((prev) => ({ ...prev, errors: [] }));
   }, []);
 
   // Initial fetch
@@ -139,6 +160,6 @@ export const useRealTimeData = (refreshInterval: number = 300000) => { // 5 minu
     fetchEarthquakesOnly,
     fetchWeatherOnly,
     clearErrors,
-    lastUpdated: status.lastUpdated
+    lastUpdated: status.lastUpdated,
   };
 };
