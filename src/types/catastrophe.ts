@@ -17,7 +17,7 @@ export interface Catastrophe {
   metadata?: Record<string, unknown>;
 }
 
-export type CatastropheType = "earthquake" | "fire" | "flood" | "hurricane" | "tornado" | "volcano" | "accident" | "drought" | "landslide" | "tsunami" | "air_quality";
+export type CatastropheType = "earthquake" | "fire" | "flood" | "hurricane" | "tornado" | "volcano" | "accident" | "drought" | "landslide" | "tsunami" | "air_quality" | "weather";
 
 export interface FilterState {
   types: CatastropheType[];

@@ -1,138 +1,230 @@
 # 🔑 API Setup Guide
 
-This guide will help you set up the API keys needed for the enhanced features of the Global Catastrophe Monitor.
+This application uses several free APIs to provide comprehensive disaster monitoring. Here's how to set them up:
 
-## 📋 Required API Keys
+## 🌬️ **Air Quality Data (WAQI - World Air Quality Index)**
 
-### 1. OpenWeather API Key (Recommended)
+**Status: ✅ FREE - No Credit Card Required**
 
-**Purpose**: Air quality data for major cities
-**Cost**: Free tier available (1000 calls/day)
-**Setup**:
+WAQI provides real-time air quality data from monitoring stations worldwide.
 
-1. Go to [OpenWeather API](https://openweathermap.org/api)
+### Setup:
+
+1. Visit: https://aqicn.org/data-platform/token/
 2. Sign up for a free account
-3. Navigate to "My API Keys"
-4. Copy your API key
-5. Add to `.env` file: `VITE_OPENWEATHER_API_KEY=your_key_here`
+3. Get your API token
+4. Add to `.env` file: `VITE_WAQI_API_KEY=your_token_here`
 
-### 2. News API Key (Recommended)
+**Benefits:**
 
-**Purpose**: Disaster-related news articles
-**Cost**: Free tier available (100 requests/day)
-**Setup**:
+- Completely free
+- No credit card required
+- Real-time data from 10,000+ stations
+- Global coverage
+- Historical data available
 
-1. Go to [News API](https://newsapi.org/)
-2. Sign up for a free account
-3. Copy your API key
+---
+
+## 📰 **Disaster News (News API)**
+
+**Status: ✅ FREE Tier Available**
+
+Provides recent news articles about disasters and emergencies.
+
+### Setup:
+
+1. Visit: https://newsapi.org/
+2. Sign up for free account
+3. Get your API key
 4. Add to `.env` file: `VITE_NEWS_API_KEY=your_key_here`
 
-### 3. NASA API Key (Optional)
+**Free Tier Limits:**
 
-**Purpose**: Additional climate and satellite data
-**Cost**: Free
-**Setup**:
+- 1,000 requests per day
+- Perfect for development and small-scale use
 
-1. Go to [NASA API](https://api.nasa.gov/)
-2. Generate an API key
-3. Add to `.env` file: `VITE_NASA_API_KEY=your_key_here`
+---
 
-## 🚀 Quick Setup
+## 🛰️ **NASA Climate Data (NASA API)**
 
-### Step 1: Create Environment File
+**Status: ✅ FREE - No Credit Card Required**
 
-```bash
-# Copy the example file
-cp .env.example .env
-```
+Provides satellite imagery and climate data.
 
-### Step 2: Add Your API Keys
+### Setup:
 
-Edit the `.env` file and replace the placeholder values:
+1. Visit: https://api.nasa.gov/
+2. Sign up for free account
+3. Get your API key
+4. Add to `.env` file: `VITE_NASA_API_KEY=your_key_here`
 
-```env
-VITE_OPENWEATHER_API_KEY=your_actual_openweather_key
-VITE_NEWS_API_KEY=your_actual_news_api_key
-VITE_NASA_API_KEY=your_actual_nasa_api_key
-```
+**Benefits:**
 
-### Step 3: Restart Development Server
+- Completely free
+- No usage limits
+- High-quality satellite data
 
-```bash
-# Stop the current server (Ctrl+C)
-# Then restart
-npm run dev
-```
+---
 
-## 🔧 Troubleshooting
+## 🌤️ **Weather Data (WeatherAPI)**
 
-### Common Issues
+**Status: ✅ FREE Tier Available - No Credit Card Required**
 
-#### 1. "API key not configured" Errors
+Provides current weather conditions and severe weather alerts for major cities.
 
-**Solution**: Make sure your `.env` file is in the project root and contains the correct API keys.
+### Setup:
 
-#### 2. CORS Errors
+1. Visit: https://www.weatherapi.com/
+2. Sign up for free account
+3. Get your API key
+4. Add to `.env` file: `VITE_WEATHER_API_KEY=your_key_here`
 
-**Solution**: The app uses a proxy service for some APIs. If you still get CORS errors, the app will use fallback data.
+**Free Tier Limits:**
 
-#### 3. Rate Limiting
+- 1,000,000 requests per month
+- Perfect for development and small-scale use
+- No credit card required
 
-**Solution**:
+**Benefits:**
 
-- OpenWeather: Free tier allows 1000 calls/day
-- News API: Free tier allows 100 requests/day
-- NASA API: No rate limits for basic usage
+- No credit card required
+- Generous free tier
+- Real-time weather data
+- Severe weather detection
 
-#### 4. Invalid API Keys
+---
 
-**Solution**: Verify your API keys are correct and active in your respective accounts.
+## 🆓 **Free APIs (No Setup Required)**
 
-### Testing API Keys
+These APIs work without any API keys:
 
-You can test your API keys manually:
+### ✅ **Earthquakes (USGS)**
 
-#### OpenWeather Test
+- Real-time earthquake data
+- No API key needed
+- Global coverage
 
-```bash
-curl "https://api.openweathermap.org/data/2.5/air_pollution?lat=34.0522&lon=-118.2437&appid=YOUR_API_KEY"
-```
+### ✅ **Wildfires (NASA FIRMS)**
 
-#### News API Test
+- Satellite fire detection
+- No API key needed
+- Near real-time data
 
-```bash
-curl "https://newsapi.org/v2/everything?q=earthquake&apiKey=YOUR_API_KEY"
-```
+### ✅ **Weather Alerts (NOAA)**
 
-#### NASA API Test
+- US weather warnings
+- No API key needed
+- Severe weather alerts
 
-```bash
-curl "https://api.nasa.gov/planetary/earth/assets?lat=1.5&lon=100.75&date=2014-02-01&dim=0.15&api_key=YOUR_API_KEY"
-```
+### ✅ **Volcanic Activity (Smithsonian)**
 
-## 📊 What Works Without API Keys
+- Global volcano monitoring
+- No API key needed
+- Eruption data
 
-The following features work without any API keys:
+### ✅ **Tsunami Warnings (NOAA)**
 
-- ✅ USGS Earthquake data
-- ✅ Weather.gov alerts
-- ✅ Basic volcanic activity (fallback data)
-- ✅ Basic tsunami warnings (fallback data)
-- ✅ All map functionality
-- ✅ All filtering and analytics
+- Pacific tsunami alerts
+- No API key needed
+- Real-time warnings
 
-## 🎯 What Requires API Keys
+---
 
-- 🔑 **Air Quality Data** - Requires OpenWeather API key
-- 🔑 **Disaster News** - Requires News API key
-- 🔑 **Enhanced Climate Data** - Requires NASA API key
+## 🚀 **Quick Start**
 
-## 💡 Tips
+1. **Copy the example file:**
 
-1. **Start with free tiers** - All APIs offer free tiers that are sufficient for development
-2. **Monitor usage** - Check your API usage in your respective dashboards
-3. **Use fallback data** - The app gracefully handles missing API keys
-4. **Environment variables** - Never commit your `.env` file to version control
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Add your API keys to `.env`:**
+
+   ```env
+   VITE_WAQI_API_KEY=your_waqi_token_here
+   VITE_NEWS_API_KEY=your_news_api_key_here
+   VITE_NASA_API_KEY=your_nasa_api_key_here
+   VITE_WEATHER_API_KEY=your_weather_api_key_here
+   ```
+
+3. **Start the application:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 📊 **Data Sources Summary**
+
+| Data Type      | API Provider | Cost      | Credit Card | Setup Required |
+| -------------- | ------------ | --------- | ----------- | -------------- |
+| Air Quality    | WAQI         | Free      | ❌ No       | ✅ Yes         |
+| Weather        | WeatherAPI   | Free tier | ❌ No       | ✅ Yes         |
+| News           | News API     | Free tier | ❌ No       | ✅ Yes         |
+| Climate        | NASA         | Free      | ❌ No       | ✅ Yes         |
+| Earthquakes    | USGS         | Free      | ❌ No       | ❌ No          |
+| Wildfires      | NASA FIRMS   | Free      | ❌ No       | ❌ No          |
+| Weather Alerts | NOAA         | Free      | ❌ No       | ❌ No          |
+| Volcanoes      | Smithsonian  | Free      | ❌ No       | ❌ No          |
+| Tsunamis       | NOAA         | Free      | ❌ No       | ❌ No          |
+
+---
+
+## 🔧 **Troubleshooting**
+
+### Missing API Keys
+
+- The app works without API keys using fallback data
+- You'll see sample data for air quality, news, and climate
+- Real-time data requires valid API keys
+
+### Rate Limits
+
+- News API: 1,000 requests/day (free tier)
+- WAQI: Generous limits for free tier
+- NASA: No limits
+
+### Data Quality
+
+- All APIs provide high-quality, verified data
+- Fallback data is realistic but not real-time
+- Real-time data updates every 5 minutes
+
+---
+
+## 💡 **Alternative APIs**
+
+If you prefer different providers:
+
+### Air Quality Alternatives:
+
+- **EPA AirNow** (US only, free)
+- **BreezoMeter** (free tier available)
+- **IQAir** (free tier with registration)
+
+### News Alternatives:
+
+- **GNews** (free tier available)
+- **MediaStack** (free tier available)
+
+### Weather Alternatives:
+
+- **WeatherAPI** (free tier, no credit card required) ✅ **RECOMMENDED**
+- **OpenWeather** (free tier, requires credit card)
+- **AccuWeather** (free tier available)
+- **Tomorrow.io** (free tier available)
+
+---
+
+## 🎯 **Recommendations**
+
+1. **Start with WAQI** - Best free air quality API
+2. **Add WeatherAPI** - Excellent weather data, no credit card required
+3. **Add News API** - Great for disaster news
+4. **Include NASA API** - Excellent for climate data
+5. **Use fallback data** - App works without any keys
+
+The application is designed to work seamlessly with or without API keys, providing a great user experience in both scenarios!
 
 ## 🔒 Security Notes
 

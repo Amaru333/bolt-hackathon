@@ -34,8 +34,29 @@ export const useRealTimeData = (refreshInterval: number = 300000) => {
     }));
 
     try {
-      const data = await apiService.fetchGlobalDisasters();
-      setCatastrophes(data);
+      const [earthquakes, fires, weatherAlerts, volcanoes, tsunamis, airQuality, news, weatherData] = await Promise.allSettled([
+        apiService.fetchEarthquakes(),
+        apiService.fetchWildfires(),
+        apiService.fetchWeatherAlerts(),
+        apiService.fetchVolcanicActivity(),
+        apiService.fetchTsunamiWarnings(),
+        apiService.fetchAirQualityData(),
+        apiService.fetchDisasterNews(),
+        apiService.fetchWeatherData(),
+      ]);
+
+      const allData: Catastrophe[] = [];
+
+      if (earthquakes.status === "fulfilled") allData.push(...earthquakes.value);
+      if (fires.status === "fulfilled") allData.push(...fires.value);
+      if (weatherAlerts.status === "fulfilled") allData.push(...weatherAlerts.value);
+      if (volcanoes.status === "fulfilled") allData.push(...volcanoes.value);
+      if (tsunamis.status === "fulfilled") allData.push(...tsunamis.value);
+      if (airQuality.status === "fulfilled") allData.push(...airQuality.value);
+      if (news.status === "fulfilled") allData.push(...news.value);
+      if (weatherData.status === "fulfilled") allData.push(...weatherData.value);
+
+      setCatastrophes(allData);
 
       setStatus((prev) => ({
         ...prev,
