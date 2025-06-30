@@ -28,3 +28,5 @@ export interface FilterState {
   };
   showActive: boolean;
 }
+
+export type ViewMode = "catastrophes" | "news" | "both";

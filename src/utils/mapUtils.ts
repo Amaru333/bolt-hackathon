@@ -1,64 +1,39 @@
-import { CatastropheType } from "../types/catastrophe";
+import { DisasterType } from '../types/data';
 
-export const getCatastropheColor = (type: CatastropheType): string => {
+export const getDisasterColor = (type: DisasterType): string => {
   const colors = {
-    earthquake: "#F97316", // Orange
-    fire: "#EF4444", // Red
-    flood: "#3B82F6", // Blue
-    hurricane: "#8B5CF6", // Purple
-    tornado: "#EC4899", // Pink
-    volcano: "#DC2626", // Dark Red
-    accident: "#6B7280", // Gray
-    drought: "#A16207", // Amber
-    landslide: "#92400E", // Brown
-    tsunami: "#0891B2", // Cyan
-    air_quality: "#059669", // Emerald
+    earthquake: '#F97316', // Orange
+    wildfire: '#EF4444', // Red
+    flood: '#3B82F6', // Blue
+    hurricane: '#8B5CF6', // Purple
+    tornado: '#EC4899', // Pink
+    drought: '#A16207', // Amber
+    winter_storm: '#06B6D4', // Cyan
+    heat_wave: '#DC2626', // Dark Red
   };
-  return colors[type] || "#6B7280";
+  return colors[type] || '#6B7280';
 };
 
-export const getCatastropheIcon = (type: CatastropheType): string => {
+export const getDisasterIcon = (type: DisasterType): string => {
   const icons = {
-    earthquake: "🏔️",
-    fire: "🔥",
-    flood: "🌊",
-    hurricane: "🌀",
-    tornado: "🌪️",
-    volcano: "🌋",
-    accident: "⚠️",
-    drought: "🏜️",
-    landslide: "⛰️",
-    tsunami: "🌊",
-    air_quality: "😷",
+    earthquake: '🏔️',
+    wildfire: '🔥',
+    flood: '🌊',
+    hurricane: '🌀',
+    tornado: '🌪️',
+    drought: '🏜️',
+    winter_storm: '❄️',
+    heat_wave: '🌡️',
   };
-  return icons[type] || "📍";
+  return icons[type] || '⚠️';
 };
 
-export const getSeverityColor = (severity: "low" | "medium" | "high" | "critical"): string => {
+export const getSeverityColor = (severity: 'low' | 'medium' | 'high' | 'critical'): string => {
   const colors = {
-    low: "#10B981", // Green
-    medium: "#F59E0B", // Yellow
-    high: "#EF4444", // Red
-    critical: "#991B1B", // Dark Red
+    low: '#10B981', // Green
+    medium: '#F59E0B', // Yellow
+    high: '#EF4444', // Red
+    critical: '#991B1B', // Dark Red
   };
-  return colors[severity] || "#6B7280";
-};
-
-export const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return `${(num / 1000000).toFixed(1)}M`;
-  }
-  if (num >= 1000) {
-    return `${(num / 1000).toFixed(1)}K`;
-  }
-  return num.toString();
-};
-
-export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(amount);
+  return colors[severity] || '#6B7280';
 };

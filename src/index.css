@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Comprehensive CSS Reset to prevent extra white space */
+/* Comprehensive CSS Reset */
 * {
   box-sizing: border-box;
 }
@@ -17,20 +17,12 @@ body,
   overflow: hidden;
 }
 
-html {
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
 }
 
 #root {
@@ -38,13 +30,11 @@ body {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  margin: 0;
-  padding: 0;
 }
 
 @import 'leaflet/dist/leaflet.css';
 
-/* Custom styles for Leaflet components */
+/* Custom Leaflet styles */
 .leaflet-container {
   font-family: inherit;
 }
@@ -59,26 +49,49 @@ body {
   background: white;
 }
 
-.custom-marker {
+.custom-marker,
+.custom-news-marker,
+.custom-tourism-marker {
   background: transparent !important;
   border: none !important;
 }
 
-/* Custom scrollbar for sidebar */
-.sidebar::-webkit-scrollbar {
+/* Fix for marker text sizing */
+.custom-marker span,
+.custom-news-marker span,
+.custom-tourism-marker span {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure rating text doesn't overflow */
+.custom-tourism-marker .rating-badge {
+  font-size: 8px !important;
+  line-height: 1 !important;
+  padding: 1px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20px;
+}
+
+/* Custom scrollbar */
+*::-webkit-scrollbar {
   width: 6px;
 }
 
-.sidebar::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: #334155;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #64748b;
   border-radius: 3px;
 }
 
-.sidebar::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
@@ -96,7 +109,6 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -107,9 +119,76 @@ body {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Glassmorphism effect */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
+/* Zoom indicator styling */
+.zoom-indicator {
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Heatmap cluster styling */
+.leaflet-interactive {
+  cursor: pointer;
+}
+
+.leaflet-interactive:hover {
+  opacity: 0.8;
+}
+
+/* Ensure proper height calculations */
+.h-screen {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.min-h-0 {
+  min-height: 0;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+/* Smooth transitions for map elements */
+.leaflet-marker-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.leaflet-marker-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Custom popup styling */
+.leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Heatmap cluster pulse animation */
+@keyframes heatmapPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.heatmap-cluster {
+  animation: heatmapPulse 2s ease-in-out infinite;
 }
