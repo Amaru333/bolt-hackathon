@@ -132,6 +132,14 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Header */}
       <div className="p-6 border-b border-slate-700">
         <div className="flex items-center justify-between mb-4">
+          <a
+            href="https://bolt.new/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2"
+          >
+            <img src="/bolt.png" className="w-8 h-8" />
+          </a>
           <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             On a Map
           </h1>
